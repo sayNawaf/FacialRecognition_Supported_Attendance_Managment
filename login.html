@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Attender-Login</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="assets/css/styleLogin.css">
+<script type="text/javascript">
+    function Authenticate(){
+        
+var name = document.getElementById("name").value;
+var password = document.getElementById("password").value;
+var data = new FormData();
+data.append("name",name);
+data.append("password",password);
+if(name == "admin" || password == "admin"){
+  window.location.replace("http://localhost/Varsity/adminRegister.php");
+}
+
+var xhr = new XMLHttpRequest();
+                xhr.open("POST","http://localhost/Varsity/Auth.php",true);
+                xhr.onload = function(){
+                    if(this.response == "not found"){
+                      console.log(this.response);
+                      var property = document.getElementById("error");
+                      property.innerHTML = "Please Enter the correct credentials.";
+                        //window.location.replace("http://localhost/Varsity/index.html");
+                    }
+                    else{
+                      
+                      console.log(this.response);
+                      $jsonData = JSON.parse(this.response);
+                      
+                      sessionStorage.setItem("subjects", $jsonData['Subjects']);
+                      sessionStorage.setItem("profID", $jsonData['profID']);
+                      sessionStorage.setItem("profName", $jsonData['profName']);
+                      
+                      
+                      window.location.replace("http://localhost/Varsity/index.php");
+                    }
+                }
+                console.log("sendingg");
+                
+                xhr.send(data);
+
+return false;
+
+    }
+</script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="route" id="welcome"></div>
+<div id="app">
+  <div class="app-view">  
+    <header class="app-header">
+      <h1>Attender</h1>
+      Welcome<br/>
+      <span class="app-subheading">
+        sign in to continue<br/>
+        to Attender.
+      </span>
+    </header>
+    <input id = "name" type="email" required pattern=".*\.\w{2,}" placeholder="User Name" />
+    <input id = "password" type="password" required placeholder="Password" />
+  <div style="position: static;">
+    <a  onclick = "Authenticate()"  class = "app-button">Login</a>
+</div>
+<div style="position: static;">
+    <p id = "error" style="padding-left: 55px; color: red;"></p>
+</div>
+    <div class="app-register">
+        
+      Don't have an account? <a href="" >Signup</a>
+    </div>
+    <svg id="svg-lines" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+       viewBox="0 0 284.2 152.7" xml:space="preserve">
+      <path class="st0" d="M37.7,107.3h222.6c12,0,21.8,9.7,21.8,21.7s-9.7,21.8-21.8,21.8c0,0-203.6,0-222.6,0S2.2,138.6,2.2,103.3   c0-52,113.5-101.5,141-101.5c13.5,0,21.8,9.7,21.8,21.8s-9.7,21.7-21.8,21.7s-21.8-9.7-21.8-21.7s9.7-21.8,21.8-21.8"/>
+      <path class="st1" d="M260.2,76.3L250,87.8l-9-9c-6.2-6.2,2-24.7,17.2-24.7c15.2,0,23.9,17.7,23.9,29.7s-11.7,23.5-23.9,23.5h-10.2"></path>
+      <g class="svg-loader" xmlns="http://www.w3.org/2000/svg">
+        <path class="svg-loader-segment -cal" d="M164.7,23.5c0-12-9.7-21.8-21.8-21.8"/>
+        <path class="svg-loader-segment -heart" d="M143,45.2c12,0,21.8-9.7,21.8-21.7"/>
+        <path class="svg-loader-segment -steps" d="M121.2,23.5c0,12,9.7,21.7,21.8,21.7"/>
+        <path class="svg-loader-segment -temp" d="M143,1.7c-12,0-21.8,9.7-21.8,21.8"/>
+      </g>
+    </svg>
+  </div>
+  <div class="app-view">
+    <header class="app-header">
+      <div class="app-bar">      
+        <div class="app-menu-icon"></div>
+        <img class="app-avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/181794/Screen_Shot_2016-03-18_at_12.52.15_AM.png"/>
+      </div>
+      
+      <div class="app-graph">
+        <svg id="svg-graph" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 382.3 141.8" xml:space="preserve">
+          <path class="svg-activity-fill" d="M263.4,56.5c-17,7.7-22.7,48.7-45.3,48.7s-23-104.7-52-104.7c-20.7,0-32.3,33.3-39.3,41.7    c-7,8.3-10.3,7.7-25.7,13.7s-26.3,33-43.3,33S5.8,14.5,0.3,14.5v127.3h263.2V56.5z"/>
+          <path class="svg-activity-line" d="M0.3,14.5c5.5,0,40.5,74.3,57.5,74.3s28-27,43.3-33s18.7-5.3,25.7-13.7c7-8.3,18.7-41.7,39.3-41.7    c29,0,29.3,104.7,52,104.7s28.3-41,45.3-48.7"/>
+          <path class="svg-activity-avg" d="M0.3,98.5c0,0,32.5,21.5,46.5,21.5s28.7-19.5,54.3-19.5s40,25,60.7,25s25.3-48,47.7-48s32,14,45.7,20.7    c13.7,6.7,17.3,2.3,27,5.7c9.7,3.3,25.3,14.7,34.7,14.7c9.3,0,24-2.3,30.3-2.3c6.3,0,29.3,2.3,35.2,2.3"/>
+          <line class="svg-activity-indicator" x1="263.4" y1="141.8" x2="263.4" y2="0.5"/>
+        </svg>
+      </div>
+    </section>
+  </div>
+</div>
+<aside class="meta">
+  <h1></h1>
+  <p>
+    <br/>
+    
+  </p>
+  
+  <p>
+    Works in Chrome and Firefox.
+  </p>
+  
+</aside>
+<!-- partial -->
+  
+</body>
+</html>
